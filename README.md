@@ -1,8 +1,9 @@
-# Projet_RFID
+# RFID PROJECT
 
-Le but de ce projet  est de concevoir un vérou RFID sur un raspberry Pi.
+the goal of the project is to designe un RFID lock on a raspberry Pi.
 
-Le verrou peut êtres controler par un logiciel.
+-the lock can register every user thanks to a data base.
+the data base will store user who are allow to get in.
 
--Aissaoui Yannis
--
+-the lock can be handle by a GUI.
+an admin would be able to manege the verou data.
