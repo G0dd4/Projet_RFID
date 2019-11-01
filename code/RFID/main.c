@@ -5,7 +5,7 @@ int main()
 {
     int tab[4]={2,18,0,88}; // Données qu'on reçoit du RFID
     int tab2[50];
-    char chaine[50]; // Tableau qui va contenir la chaine de caractère
+    char chaine[50]; // Tableau qui va contenir la chaine de caractères
     int i;
 
     for(i = 0; i < 4; ++i){ // On regarde case par case jusqu'à Byte.size
@@ -14,7 +14,7 @@ int main()
         printf("%X",tab[i]); // Puis on écrit le nombre en hexa
       }
       else{
-        printf("%X",tab[i]); // Sinon on écrit directement le nombre à 2 chiffre
+        printf("%X",tab[i]); // Sinon on écrit directement le nombre à 2 chiffres
       }
     }
 
