@@ -1,9 +1,9 @@
 # RFID PROJECT
 
-the goal of the project is to designe un RFID lock on a raspberry Pi.
+The goal of the project is to design a RFID lock on a raspberry Pi.
 
--the lock can register every user thanks to a data base.
-the data base will store user who are allow to get in.
+- The lock can register every users thanks to a data base.
+The data base will store users who are allowed to get in.
 
--the lock can be handle by a GUI.
-an admin would be able to manege the verou data.
+- The lock can be handled by a GUI.
+An admin will be able to manege the verou data.
