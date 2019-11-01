@@ -11,11 +11,11 @@ int main()
     for(i = 0; i < 4; ++i){
       if(tab[i] < 0x10){
         printf("0");
-        printf("%X",tab[i]);
+        printf("%X ",tab[i]);
       }
       else{
-      //  printf(" ");
-        printf("%X",tab[i]);
+        printf("");
+        printf("%X ",tab[i]);
       }
     }
 
@@ -23,4 +23,3 @@ int main()
     printf("%s",chaine);
     return 0;
 }
-
