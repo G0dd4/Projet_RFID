@@ -12,6 +12,7 @@
 #define WINDOW_H_
 #define PATH "fileTest/test.csv"
 #include <gtk/gtk.h>
+#include <mysql/mysql.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
