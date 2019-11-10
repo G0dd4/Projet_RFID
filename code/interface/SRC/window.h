@@ -18,6 +18,7 @@
 #include <ctype.h>
 #include <sys/mman.h>
 #include <math.h>
+#include "bdd.h"
 
 
 
@@ -39,12 +40,16 @@ enum
 struct Ajout{
 
 	GtkTextView* m_textView_log;
+
 	GtkEntry* m_lineEdit_nom;
 	GtkEntry* m_lineEdit_prenom;
 	GtkEntry* m_lineEdit_NB;
+
 	GtkButton* m_button_ajouter;
 	GtkButton* m_button_effacer;
 	GtkButton* m_button_getLast;
+
+	GtkTextBuffer* m_data;
 };
 /***
  * @brief permet de controler l'ongler supprimer
@@ -62,12 +67,6 @@ struct Supprimer{
 	GtkTreeView* m_treeView;
 	GtkTreeSelection* m_select;
 	GtkListStore* m_data;
-	//GtkTreeViewColumn* m_cologneNom;
-	//GtkTreeViewColumn* m_colognePrenom;
-	//GtkTreeViewColumn* m_cologneNumBadge;
-	//GtkCellRenderer* m_renderNom;
-	//GtkCellRenderer* m_renderPrenom;
-	//GtkCellRenderer* m_renderNumBadge;
 
 
 };
@@ -78,12 +77,16 @@ struct Modifier{
 
 	/* déclaration view */
 	GtkWidget* m_view;
+
 	/* déclaration lineEdit */
 	GtkEntry* m_lineEdit_nom;
 	GtkEntry* m_lineEdit_prenom;
 	GtkEntry* m_lineEdit_NB;
+
 	/* déclaration bouton */
 	GtkButton* m_button_modifer;
+	GtkButton* m_button_refresh;
+
 	/* déclaration treeView */
 	GtkTreeView* m_treeView;
 	GtkTreeSelection* m_select;

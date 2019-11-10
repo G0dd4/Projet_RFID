@@ -8,16 +8,19 @@ CFLAGS  += -DGTK_MULTIHEAD_SAFE=1 -DGTK_MULTIDEVICE_SAFE=1
 CFLAGS  += `pkg-config gtk+-3.0 --cflags`
 CFLAGS  += `pkg-config --cflags --libs gtk+-2.0`
 CFLAGS  += -g 
+CFLAGS	+= `pkg-config mysqlclient --cflags`
+
 
 LDFLAGS  = `pkg-config gtk+-3.0 --libs`
-
+LDFLAGS += `pkg-config mysqlclient --libs`
 
 
 
 all: $(EXEC)
 
-$(EXEC): ajout.o main.o supprimer.o modifier.o
-	$(CC) ajout.o main.o supprimer.o modifier.o -o $(EXEC) $(LDFLAGS)
+
+$(EXEC): ajout.o main.o supprimer.o modifier.o bdd.o
+	$(CC) ajout.o main.o supprimer.o modifier.o bdd.o -o $(EXEC) $(LDFLAGS)
 	
 	
 modifier.o: SRC/modifier.c SRC/modifier.h SRC/window.h
@@ -29,8 +32,11 @@ supprimer.o: SRC/supprimer.c SRC/supprimer.h SRC/window.h
 ajout.o: SRC/ajout.c SRC/ajout.h SRC/window.h
 	$(CC) -o ajout.o -c SRC/ajout.c $(CFLAGS)
 	
-main.o: main.c SRC/window.h SRC/ajout.h SRC/modifier.h SRC/supprimer.h
-	$(CC) -o main.o -c main.c  $(CFLAGS)
+main.o: main.c SRC/window.h SRC/ajout.h SRC/modifier.h SRC/supprimer.h SRC/bdd.h
+	$(CC) -o main.o -c main.c $(CFLAGS)
+
+bdd.o: SRC/bdd.c SRC/bdd.h
+	$(CC) -o bdd.o -c SRC/bdd.c $(CFLAGS)
 
 clean:
 	rm -rf *.o

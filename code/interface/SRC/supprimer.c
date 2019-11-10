@@ -61,32 +61,26 @@ void refresh(){
 }
 void updateSupp(){
 	GtkTreeIter iter;
+	gtk_list_store_clear(mainWindow->supprimer.m_data);
 
-		//requéte pour selectionner le tableau des utilisateur
-		// SELECT NOM,PRENOM,NUMBADGE, FROM USER;
-		gtk_list_store_clear(mainWindow->supprimer.m_data);
-		// boucle for
-		// my sql fetch row;
-		gtk_list_store_append (mainWindow->supprimer.m_data, &iter);
-		gtk_list_store_set (mainWindow->supprimer.m_data, &iter,
-				COL_NOM, "Aissoaui",
-				COL_PRENOM, "Yannis",
-				COL_NUMBADGE,"1F34D201",
-				-1);
-		gtk_list_store_append (mainWindow->supprimer.m_data, &iter);
-		gtk_list_store_set (mainWindow->supprimer.m_data, &iter,
-				COL_NOM, "Vu",
-				COL_PRENOM, "Tylan",
-				COL_NUMBADGE,"1E304560",
-				-1);
-		gtk_list_store_append (mainWindow->supprimer.m_data, &iter);
-		gtk_list_store_set (mainWindow->supprimer.m_data, &iter,
-				COL_NOM, "Khan",
-				COL_PRENOM, "Naghman",
-				COL_NUMBADGE,"1C5060D4",
-				-1);
+	switch(recupBdd("SELECT nom,prenom,numBadge FROM utilisateur")){
+	case(-1):return;break;
+	case(-2):return;break;
+	case(-3):return;break;
+	case(-4):return;break;
+	}
 
-		gtk_tree_view_set_model (GTK_TREE_VIEW (mainWindow->supprimer.m_treeView), mainWindow->supprimer.m_data);
+
+	do{
+		gtk_list_store_append (mainWindow->supprimer.m_data, &iter);
+		gtk_list_store_set (mainWindow->supprimer.m_data, &iter,
+				COL_NOM , reponse(0),
+				COL_PRENOM , reponse(1),
+				COL_NUMBADGE ,reponse(2),
+				-1);
+	}while(newLine() == 0);
+
+	gtk_tree_view_set_model (GTK_TREE_VIEW (mainWindow->supprimer.m_treeView), mainWindow->supprimer.m_data);
 }
 void fillData(){
 
@@ -95,14 +89,35 @@ void fillData(){
 
 void supprimer(){
 	mainWindow->supprimer.m_select= gtk_tree_view_get_selection(GTK_TREE_VIEW(mainWindow->supprimer.m_treeView));
-	gchar *value;
+
+
+	char* requette;
+	char* nom;
+	char* numBadge;
 	GtkTreeIter iter;
 
 	if (gtk_tree_selection_get_selected(GTK_TREE_SELECTION(mainWindow->supprimer.m_select), &mainWindow->supprimer.m_data, &iter) == FALSE){
 		g_print("error\n");
 		return;
 	}
-	//gtk_tree_model_get(mainWindow->supprimer.m_data, &iter, COL_NOM, &value,  -1);
-	gtk_tree_model_get(mainWindow->supprimer.m_data, &iter, COL_NUMBADGE, &value,  -1);
-	g_print("col 0 = %s; \n", value);
+	gtk_tree_model_get(mainWindow->supprimer.m_data, &iter, COL_NOM, &nom,  -1);
+	gtk_tree_model_get(mainWindow->supprimer.m_data, &iter, COL_NUMBADGE, &numBadge,  -1);
+
+	requette = malloc(56 + strlen(nom)+strlen(numBadge) + 4);
+	for(int i = 0; i < 56 + strlen(nom)+strlen(numBadge)+4;i++)
+		requette[i]=0;
+
+	printf("%s\n", nom);
+	printf("%s\n",numBadge);
+
+	strcat(requette,"DELETE FROM utilisateur WHERE nom = '");
+	strcat(requette,nom);
+	strcat(requette,"' AND numBadge = '");
+	strcat(requette,numBadge);
+	strcat(requette,"' ;");
+
+	printf("%s\n",requette);
+	ecrirBdd(requette);
+	free(requette);
+	refresh();
 }

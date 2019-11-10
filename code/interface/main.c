@@ -1,16 +1,19 @@
 #include "SRC/ajout.h"
 #include "SRC/modifier.h"
 #include "SRC/supprimer.h"
+#include "SRC/bdd.h"
 
 int main(int argc, char *argv [])
 {
 
-
+	if(connexion("127.0.0.1","root" ,"beartooth", "RFID") == -1){
+		printf("impossible de se connecter à la base de données \n");
+		exit(EXIT_FAILURE);
+	}
 	mainWindow = malloc(sizeof(struct windowControl));
 	GtkBuilder *builder = NULL;
 	GError *error = NULL;
 	gchar *filename = NULL;
-	int status;
 
 	/* Initialisation de la librairie Gtk. */
 	gtk_init(&argc, &argv);
@@ -59,6 +62,8 @@ int main(int argc, char *argv [])
 	g_signal_connect (G_OBJECT (mainWindow->supprimer.m_buton_refresh),"clicked",(GCallback)refresh,NULL);
 	g_signal_connect (G_OBJECT (mainWindow->supprimer.m_buton_remove), "clicked",(GCallback)supprimer,NULL);
 	g_signal_connect (G_OBJECT (mainWindow->modifier.m_button_modifer), "clicked",(GCallback)modifier,NULL);
+	g_signal_connect (G_OBJECT (mainWindow->modifier.m_button_refresh), "clicked",(GCallback)updateModif,NULL);
+
 
 	/* Affichage de la fenêtre principale. */
 	gtk_widget_show_all (mainWindow->m_window);
@@ -71,5 +76,7 @@ int main(int argc, char *argv [])
 
 void leave(){
 	free(mainWindow);
+	deconnexion();
 	gtk_main_quit();
+
 }

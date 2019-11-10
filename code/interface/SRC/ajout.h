@@ -16,7 +16,7 @@ void initAjout(GtkBuilder* builder);
 void ajouterUser();
 void effacerChamp();
 int verifChamp();
-
+int verifNumBadge(char* data);
 
 
 #endif /* SRC_AJOUT_H_ */
